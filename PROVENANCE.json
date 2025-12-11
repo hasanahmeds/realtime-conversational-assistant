@@ -1,0 +1,225 @@
+{
+  "number": 20,
+  "title": "Realtime Conversational Assistant",
+  "slug": "realtime-conversational-assistant",
+  "start": "2025-12-11",
+  "end": "2025-12-31",
+  "repo": "Praveen869/Realtime_chat_app",
+  "branch": "main",
+  "license": "MIT",
+  "note": "FastAPI/WebSocket and React chat foundation with chatbot features; not a verified sentiment-aware deep-learning assistant.",
+  "sha": "11372b5e3267344fd23914cd15f0576537274da9",
+  "archive_sha256": "91a045fc69a6eecbaea0692ec257081334d0e9270c1a4c0e394778b87e059ab9",
+  "imported_at": "2026-10-28T21:31:54.064604+00:00",
+  "history": "Reconstructed import history; dates are not dates of original development.",
+  "upstream_files": {
+    "upstream/.gitignore": {
+      "sha256": "dd75c199a1b39d575dc8fa6484c8c28ab6dc64fa8ad590bc6fbbb99631fe59c7",
+      "mode": "100644",
+      "bytes": 197
+    },
+    "upstream/.gitlab-ci.yml": {
+      "sha256": "15f16b07d260e48c52b95bd5fddb0ae97d49a0651b3403c5add11c80679164cd",
+      "mode": "100644",
+      "bytes": 774
+    },
+    "upstream/Aichat.png": {
+      "sha256": "64580b21c7ea9a8d95698ab8b8bfd772d62eedf05d958438606b10a03ae2eb8c",
+      "mode": "100644",
+      "bytes": 133514
+    },
+    "upstream/LICENSE": {
+      "sha256": "17ee1bf77bb4395ad5c065e0330051aba3251b2513f739ab7b5a21e467ede53b",
+      "mode": "100644",
+      "bytes": 1066
+    },
+    "upstream/README.md": {
+      "sha256": "a53c48164c463948ae8febc82517780d62782a0d06cb5c11dbecdc809d7280fa",
+      "mode": "100644",
+      "bytes": 8269
+    },
+    "upstream/Room.png": {
+      "sha256": "5035ac499c92e244f50a9d304d99ab10c3ee755d4a19e9815d74ced67560da3b",
+      "mode": "100644",
+      "bytes": 75079
+    },
+    "upstream/backend/.env.example": {
+      "sha256": "30ee8b1f7f1165789cd4070d9bcc170b4179ed8c854cff2b83c994d94cc766ff",
+      "mode": "100644",
+      "bytes": 426
+    },
+    "upstream/backend/main.py": {
+      "sha256": "540a94569af85ff728fe69507fc6fc2d58543adacf984a9331353dffea2d0b37",
+      "mode": "100644",
+      "bytes": 28701
+    },
+    "upstream/backend/requirements.txt": {
+      "sha256": "aaa9e7974013459bd3b1feba7cb6f0f8b02674340b4678f64c6c762cd5df2f60",
+      "mode": "100644",
+      "bytes": 74
+    },
+    "upstream/chatinterface.png": {
+      "sha256": "a7e1a234faa76a19ebba121c36057e277f23761b92829d9ded723c63e3528da6",
+      "mode": "100644",
+      "bytes": 52282
+    },
+    "upstream/frontend/.env.example": {
+      "sha256": "c1b0d6070f493aebe956d69f60953e228bf8b807c79b971f3311a4ad91ebc97a",
+      "mode": "100644",
+      "bytes": 463
+    },
+    "upstream/frontend/.gitignore": {
+      "sha256": "fe718e7babb14f3cbad2d97f08889b9ce5215ed3fe0e43b2b8cfbfb3b9b844e8",
+      "mode": "100644",
+      "bytes": 253
+    },
+    "upstream/frontend/README.md": {
+      "sha256": "a460b4dc7e6392e76aa54d844c9261b8db0adb7f967ba8300526456f1dcf5fb4",
+      "mode": "100644",
+      "bytes": 1027
+    },
+    "upstream/frontend/eslint.config.js": {
+      "sha256": "da0cbf3213f2994741024e2aa5165d017e0345f389dcd2f8a0db97fee7289d1b",
+      "mode": "100644",
+      "bytes": 758
+    },
+    "upstream/frontend/index.html": {
+      "sha256": "67b571f16b69fd5e27feab5053d062dfae38e97ddb820f26881f05374582d2d7",
+      "mode": "100644",
+      "bytes": 360
+    },
+    "upstream/frontend/package-lock.json": {
+      "sha256": "5299793b4f2562f5881ab68da915cd5247a7e83a5e24629493509dec4c518291",
+      "mode": "100644",
+      "bytes": 119842
+    },
+    "upstream/frontend/package.json": {
+      "sha256": "35d799c0aa54cecd5aa6beed464fc1a8b30dd384bd9fc48571f40d20bc3baa45",
+      "mode": "100644",
+      "bytes": 691
+    },
+    "upstream/frontend/postcss.config.js": {
+      "sha256": "190c877db466995bf1482f4a16abd06e04a89ede3119341e2a86ff96e1737b27",
+      "mode": "100644",
+      "bytes": 80
+    },
+    "upstream/frontend/public/favicon.svg": {
+      "sha256": "61bc9a161de58248288e6905425d7180f0624c2865007b97d763fdac12043a66",
+      "mode": "100644",
+      "bytes": 9522
+    },
+    "upstream/frontend/public/icons.svg": {
+      "sha256": "b45fa506195cfcdef406ba9f0c77b36ddc1a7c224040926ec70abc2fdea7b93a",
+      "mode": "100644",
+      "bytes": 5031
+    },
+    "upstream/frontend/src/App.css": {
+      "sha256": "6e25a776d3e8102da5bacb3cb99f4a5fc662a2e01e6143140671a556d28c3d5c",
+      "mode": "100644",
+      "bytes": 2891
+    },
+    "upstream/frontend/src/App.jsx": {
+      "sha256": "f69353206dbd8761c74cc93ea3894cc8d67ba0ec7350dad52544cb6d6b456f61",
+      "mode": "100644",
+      "bytes": 995
+    },
+    "upstream/frontend/src/assets/hero.png": {
+      "sha256": "72a860570eddf1dd9988f26c7106c67be286bc9f2fd3303c465ce87edb1ae6cd",
+      "mode": "100644",
+      "bytes": 44919
+    },
+    "upstream/frontend/src/assets/react.svg": {
+      "sha256": "35ef61ed53b323ae94a16a8ec659b3d0af3880698791133f23b084085ab1c2e5",
+      "mode": "100644",
+      "bytes": 4126
+    },
+    "upstream/frontend/src/assets/vite.svg": {
+      "sha256": "5be21acd42eb7b896e517f4e0f0f11eb5c5d9e54fbbcebe9453f033008fcca6f",
+      "mode": "100644",
+      "bytes": 8709
+    },
+    "upstream/frontend/src/components/AIChatScreen.jsx": {
+      "sha256": "cac666799c7fa51fbabff9966ba26c69d20c4e3a00e2a1941c1654f734a94488",
+      "mode": "100644",
+      "bytes": 39748
+    },
+    "upstream/frontend/src/components/ChatScreen.jsx": {
+      "sha256": "bc44c2dfb92f568cac9217b1d862f5f13a8c9d260eb42b7ca41430e8d8ddde7f",
+      "mode": "100644",
+      "bytes": 13912
+    },
+    "upstream/frontend/src/components/RoomList.jsx": {
+      "sha256": "00e2805fca103742cd57c81071dd2ac0731d25ba39cfa7c01e7fa56fecb4ba48",
+      "mode": "100644",
+      "bytes": 8339
+    },
+    "upstream/frontend/src/components/UsernameScreen.jsx": {
+      "sha256": "85f90fd2bf710164d379cfe2f24d816ef20cc4badb919ea7358e49df18895ecf",
+      "mode": "100644",
+      "bytes": 2486
+    },
+    "upstream/frontend/src/index.css": {
+      "sha256": "15cdf6ad5255c37c836de50bbe954fd3f1b54f794fefeb482b6dffd6f33b16e6",
+      "mode": "100644",
+      "bytes": 423
+    },
+    "upstream/frontend/src/main.jsx": {
+      "sha256": "4b4b864dbe45253425d0c925337180ec07e204295179f80f59551216f466f618",
+      "mode": "100644",
+      "bytes": 229
+    },
+    "upstream/frontend/tailwind.config.js": {
+      "sha256": "1336358f90b5f41816404b1bd1117282e12578d481cf78018f4dbcecd0c0c99b",
+      "mode": "100644",
+      "bytes": 130
+    },
+    "upstream/frontend/vite.config.js": {
+      "sha256": "4d36db3522a7b2dd10e0936e1004373c7ee65f10f7cd7920cd76410459c15a45",
+      "mode": "100644",
+      "bytes": 161
+    },
+    "upstream/login.png": {
+      "sha256": "95b9cbe497f5ab7aa40c55b980b77def85d88140d6415ae647b75c8a3c88afd0",
+      "mode": "100644",
+      "bytes": 43635
+    }
+  },
+  "excluded_git_metadata": [],
+  "history_repair": {
+    "pattern": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "approved_calendar": true,
+    "seed": 20251028,
+    "previous_main": "67f6ffc3f3cdcdb37abf67d4b18b68cce58b458f",
+    "daily_counts": {
+      "2025-12-11": 2,
+      "2025-12-12": 0,
+      "2025-12-13": 3,
+      "2025-12-14": 1,
+      "2025-12-15": 2,
+      "2025-12-16": 0,
+      "2025-12-17": 5,
+      "2025-12-18": 0,
+      "2025-12-19": 4,
+      "2025-12-20": 0,
+      "2025-12-21": 5,
+      "2025-12-22": 0,
+      "2025-12-23": 1,
+      "2025-12-24": 2,
+      "2025-12-25": 5,
+      "2025-12-26": 4,
+      "2025-12-27": 0,
+      "2025-12-28": 3,
+      "2025-12-29": 2,
+      "2025-12-30": 3,
+      "2025-12-31": 0
+    },
+    "description": "Reconstructed import timestamps; not original development dates."
+  }
+}

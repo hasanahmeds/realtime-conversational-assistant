@@ -1,0 +1,311 @@
+[
+  {
+    "timestamp": "2025-12-11T14:07:59+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 1/42",
+    "prefix_bytes": {
+      "upstream/LICENSE": 1066
+    }
+  },
+  {
+    "timestamp": "2025-12-11T16:30:29+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 2/42",
+    "prefix_bytes": {
+      "upstream/.gitlab-ci.yml": 774
+    }
+  },
+  {
+    "timestamp": "2025-12-13T14:26:52+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 3/42",
+    "prefix_bytes": {
+      "upstream/backend/requirements.txt": 74,
+      "upstream/.gitignore": 197
+    }
+  },
+  {
+    "timestamp": "2025-12-13T15:18:48+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 4/42",
+    "prefix_bytes": {
+      "upstream/backend/main.py": 3505
+    }
+  },
+  {
+    "timestamp": "2025-12-13T20:53:38+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 5/42",
+    "prefix_bytes": {
+      "upstream/backend/main.py": 6578
+    }
+  },
+  {
+    "timestamp": "2025-12-14T12:20:20+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 6/42",
+    "prefix_bytes": {
+      "upstream/backend/main.py": 9515
+    }
+  },
+  {
+    "timestamp": "2025-12-15T16:05:57+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 7/42",
+    "prefix_bytes": {
+      "upstream/backend/main.py": 11157
+    }
+  },
+  {
+    "timestamp": "2025-12-15T21:46:40+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 8/42",
+    "prefix_bytes": {
+      "upstream/backend/main.py": 17197
+    }
+  },
+  {
+    "timestamp": "2025-12-17T14:45:49+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 9/42",
+    "prefix_bytes": {
+      "upstream/backend/main.py": 23407
+    }
+  },
+  {
+    "timestamp": "2025-12-17T15:56:06+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 10/42",
+    "prefix_bytes": {
+      "upstream/backend/main.py": 25771
+    }
+  },
+  {
+    "timestamp": "2025-12-17T16:35:51+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 11/42",
+    "prefix_bytes": {
+      "upstream/backend/main.py": 28092
+    }
+  },
+  {
+    "timestamp": "2025-12-17T16:40:14+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 12/42",
+    "prefix_bytes": {
+      "upstream/backend/main.py": 28701,
+      "upstream/chatinterface.png": 52282
+    }
+  },
+  {
+    "timestamp": "2025-12-17T16:57:21+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 13/42",
+    "prefix_bytes": {
+      "upstream/login.png": 43635
+    }
+  },
+  {
+    "timestamp": "2025-12-19T13:20:14+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 14/42",
+    "prefix_bytes": {
+      "upstream/README.md": 8269,
+      "upstream/Room.png": 75079
+    }
+  },
+  {
+    "timestamp": "2025-12-19T15:53:07+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 15/42",
+    "prefix_bytes": {
+      "upstream/Aichat.png": 133514,
+      "upstream/frontend/.gitignore": 253
+    }
+  },
+  {
+    "timestamp": "2025-12-19T18:19:37+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 16/42",
+    "prefix_bytes": {
+      "upstream/frontend/eslint.config.js": 758,
+      "upstream/frontend/index.html": 360
+    }
+  },
+  {
+    "timestamp": "2025-12-19T20:17:38+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 17/42",
+    "prefix_bytes": {
+      "upstream/frontend/package-lock.json": 119842,
+      "upstream/frontend/package.json": 691
+    }
+  },
+  {
+    "timestamp": "2025-12-21T12:31:58+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 18/42",
+    "prefix_bytes": {
+      "upstream/frontend/postcss.config.js": 80,
+      "upstream/frontend/public/favicon.svg": 9522
+    }
+  },
+  {
+    "timestamp": "2025-12-21T14:13:54+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 19/42",
+    "prefix_bytes": {
+      "upstream/frontend/public/icons.svg": 5031
+    }
+  },
+  {
+    "timestamp": "2025-12-21T16:43:37+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 20/42",
+    "prefix_bytes": {
+      "upstream/frontend/README.md": 1027,
+      "upstream/frontend/src/App.css": 2891
+    }
+  },
+  {
+    "timestamp": "2025-12-21T18:53:21+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 21/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/App.jsx": 995
+    }
+  },
+  {
+    "timestamp": "2025-12-21T22:15:37+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 22/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/assets/hero.png": 44919,
+      "upstream/frontend/src/assets/react.svg": 4126
+    }
+  },
+  {
+    "timestamp": "2025-12-23T21:44:58+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 23/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/assets/vite.svg": 8709,
+      "upstream/frontend/src/components/AIChatScreen.jsx": 1473
+    }
+  },
+  {
+    "timestamp": "2025-12-24T13:32:49+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 24/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/AIChatScreen.jsx": 5299
+    }
+  },
+  {
+    "timestamp": "2025-12-24T20:46:31+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 25/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/AIChatScreen.jsx": 6867
+    }
+  },
+  {
+    "timestamp": "2025-12-25T12:09:04+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 26/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/AIChatScreen.jsx": 9345
+    }
+  },
+  {
+    "timestamp": "2025-12-25T13:30:03+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 27/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/AIChatScreen.jsx": 14197
+    }
+  },
+  {
+    "timestamp": "2025-12-25T15:00:14+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 28/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/AIChatScreen.jsx": 19357
+    }
+  },
+  {
+    "timestamp": "2025-12-25T17:42:21+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 29/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/AIChatScreen.jsx": 24790
+    }
+  },
+  {
+    "timestamp": "2025-12-25T22:48:19+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 30/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/AIChatScreen.jsx": 31314
+    }
+  },
+  {
+    "timestamp": "2025-12-26T13:07:01+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 31/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/AIChatScreen.jsx": 34355
+    }
+  },
+  {
+    "timestamp": "2025-12-26T16:55:01+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 32/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/AIChatScreen.jsx": 39677
+    }
+  },
+  {
+    "timestamp": "2025-12-26T19:23:08+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 33/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/AIChatScreen.jsx": 39748,
+      "upstream/frontend/src/components/ChatScreen.jsx": 2153
+    }
+  },
+  {
+    "timestamp": "2025-12-26T21:17:39+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 34/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/ChatScreen.jsx": 6224
+    }
+  },
+  {
+    "timestamp": "2025-12-28T16:02:27+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 35/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/ChatScreen.jsx": 11576
+    }
+  },
+  {
+    "timestamp": "2025-12-28T20:58:30+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 36/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/ChatScreen.jsx": 13912,
+      "upstream/frontend/src/components/RoomList.jsx": 1478
+    }
+  },
+  {
+    "timestamp": "2025-12-28T21:41:12+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 37/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/RoomList.jsx": 4472
+    }
+  },
+  {
+    "timestamp": "2025-12-29T17:44:03+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 38/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/RoomList.jsx": 8339
+    }
+  },
+  {
+    "timestamp": "2025-12-29T21:39:15+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 39/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/components/UsernameScreen.jsx": 2486
+    }
+  },
+  {
+    "timestamp": "2025-12-30T13:28:15+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 40/42",
+    "prefix_bytes": {
+      "upstream/frontend/src/index.css": 423,
+      "upstream/frontend/src/main.jsx": 229
+    }
+  },
+  {
+    "timestamp": "2025-12-30T20:07:31+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 41/42",
+    "prefix_bytes": {
+      "upstream/frontend/tailwind.config.js": 130,
+      "upstream/frontend/vite.config.js": 161
+    }
+  },
+  {
+    "timestamp": "2025-12-30T20:12:35+00:00",
+    "message": "chore(import): reconstruct Praveen869/Realtime_chat_app slice 42/42",
+    "prefix_bytes": {
+      "upstream/backend/.env.example": 426,
+      "upstream/frontend/.env.example": 463
+    }
+  }
+]
