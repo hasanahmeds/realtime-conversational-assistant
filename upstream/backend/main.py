@@ -78,3 +78,83 @@ async def call_openrouter_api(system_prompt: str, user_text: str, chat_history: 
     headers = {
         "Authorization": f"Bearer {openrouter_key}",
         "Content-Type": "application/json",
+        "HTTP-Referer": "http://localhost:5173",
+        "X-Title": "Realtime ChatApp AI Studio"
+    }
+    
+    messages = [{"role": "system", "content": system_prompt}]
+    
+    for msg in chat_history[-6:]:
+        messages.append({
+            "role": "user" if msg["role"] == "user" else "assistant",
+            "content": msg["text"]
+        })
+        
+    messages.append({"role": "user", "content": user_text})
+    
+    payload = {
+        "model": get_openrouter_model(),
+        "messages": messages
+    }
+    
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, json=payload, headers=headers, timeout=10.0)
+            if response.status_code == 200:
+                resp_data = response.json()
+                choices = resp_data.get("choices", [])
+                if choices:
+                    content = choices[0].get("message", {}).get("content", "")
+                    if content:
+                        print("🤖 [AI Success] Response generated via OpenRouter API!")
+                        return content
+            print(f"⚠️ OpenRouter API status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"⚠️ OpenRouter API timeout/error: {e}")
+    return ""
+
+async def call_gemini_api(system_prompt: str, user_text: str, chat_history: list) -> str:
+    gemini_key = get_gemini_key()
+    if not gemini_key:
+        return ""
+    
+    gemini_model = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash").strip()
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{gemini_model}:generateContent?key={gemini_key}"
+    
+    contents = []
+    # Chat history is passed as a list of {"role": "user"|"model", "text": "..."}
+    for msg in chat_history[-6:]:  # Only keep last 6 turns of history for token efficiency
+        contents.append({
+            "role": "user" if msg["role"] == "user" else "model",
+            "parts": [{"text": msg["text"]}]
+        })
+    
+    contents.append({
+        "role": "user",
+        "parts": [{"text": user_text}]
+    })
+    
+    payload = {
+        "systemInstruction": {
+            "parts": [{"text": system_prompt}]
+        },
+        "contents": contents
+    }
+    
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, json=payload, timeout=10.0)
+            if response.status_code == 200:
+                resp_data = response.json()
+                candidates = resp_data.get("candidates", [])
+                if candidates:
+                    parts = candidates[0].get("content", {}).get("parts", [])
+                    if parts:
+                        content = parts[0].get("text", "")
+                        if content:
+                            print("🤖 [AI Success] Response generated via Gemini API!")
+                            return content
+            print(f"⚠️ Gemini API returned status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"⚠️ Error calling Gemini API: {e}")
+    return ""
