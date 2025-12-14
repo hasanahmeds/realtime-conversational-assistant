@@ -158,3 +158,83 @@ async def call_gemini_api(system_prompt: str, user_text: str, chat_history: list
     except Exception as e:
         print(f"⚠️ Error calling Gemini API: {e}")
     return ""
+
+async def stream_openrouter_api(system_prompt: str, user_text: str, chat_history: list):
+    openrouter_key = get_openrouter_key()
+    if not openrouter_key:
+        return
+
+    url = "https://openrouter.ai/api/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {openrouter_key}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "http://localhost:5173",
+        "X-Title": "Realtime ChatApp AI Studio"
+    }
+
+    messages = [{"role": "system", "content": system_prompt}]
+    for msg in chat_history[-6:]:
+        messages.append({
+            "role": "user" if msg["role"] == "user" else "assistant",
+            "content": msg["text"]
+        })
+    messages.append({"role": "user", "content": user_text})
+
+    payload = {
+        "model": get_openrouter_model(),
+        "messages": messages,
+        "stream": True
+    }
+
+    try:
+        async with httpx.AsyncClient() as client:
+            async with client.stream("POST", url, json=payload, headers=headers, timeout=30.0) as response:
+                if response.status_code == 200:
+                    async for line in response.aiter_lines():
+                        if line.startswith("data: "):
+                            data_str = line[6:].strip()
+                            if data_str == "[DONE]":
+                                break
+                            try:
+                                json_obj = json.loads(data_str)
+                                choices = json_obj.get("choices", [])
+                                if choices:
+                                    delta = choices[0].get("delta", {})
+                                    chunk = delta.get("content", "")
+                                    if chunk:
+                                        yield chunk
+                            except Exception:
+                                continue
+                else:
+                    print(f"⚠️ OpenRouter Streaming status {response.status_code}")
+    except Exception as e:
+        print(f"⚠️ OpenRouter Streaming error: {e}")
+
+async def stream_gemini_api(system_prompt: str, user_text: str, chat_history: list):
+    gemini_key = get_gemini_key()
+    if not gemini_key:
+        return
+
+    gemini_model = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash").strip()
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{gemini_model}:streamGenerateContent?key={gemini_key}&alt=sse"
+
+    contents = []
+    for msg in chat_history[-6:]:
+        contents.append({
+            "role": "user" if msg["role"] == "user" else "model",
+            "parts": [{"text": msg["text"]}]
+        })
+    contents.append({
+        "role": "user",
+        "parts": [{"text": user_text}]
+    })
+
+    payload = {
+        "systemInstruction": {
+            "parts": [{"text": system_prompt}]
+        },
+        "contents": contents
+    }
+
+    try:
+        async with httpx.AsyncClient() as client:
