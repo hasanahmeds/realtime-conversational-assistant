@@ -238,3 +238,43 @@ async def stream_gemini_api(system_prompt: str, user_text: str, chat_history: li
 
     try:
         async with httpx.AsyncClient() as client:
+            async with client.stream("POST", url, json=payload, timeout=30.0) as response:
+                if response.status_code == 200:
+                    async for line in response.aiter_lines():
+                        if line.startswith("data: "):
+                            data_str = line[6:].strip()
+                            try:
+                                json_obj = json.loads(data_str)
+                                candidates = json_obj.get("candidates", [])
+                                if candidates:
+                                    parts = candidates[0].get("content", {}).get("parts", [])
+                                    if parts:
+                                        text = parts[0].get("text", "")
+                                        if text:
+                                            yield text
+                            except Exception:
+                                continue
+                else:
+                    print(f"⚠️ Gemini Streaming status {response.status_code}")
+    except Exception as e:
+        print(f"⚠️ Error calling Gemini Streaming API: {e}")
+
+async def stream_mock_response(full_text: str):
+    words = full_text.split(" ")
+    for i, word in enumerate(words):
+        chunk = word + (" " if i < len(words) - 1 else "")
+        yield chunk
+        await asyncio.sleep(0.02)
+
+async def stream_ai_response(
+    websocket: WebSocket,
+    system_prompt: str,
+    text_payload: str,
+    chat_history: list,
+    persona_id: str,
+    custom_instruction: str,
+    time_payload: str
+) -> str:
+    message_id = str(uuid.uuid4())
+
+    await websocket.send_json({
