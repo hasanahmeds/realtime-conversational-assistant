@@ -598,3 +598,23 @@ async def websocket_endpoint(
 
 async def broadcast(room_name: str, data: dict):
     if room_name not in rooms:
+        return
+    for user in rooms[room_name]:
+        try:
+            await user["ws"].send_json(data)
+        except Exception:
+            pass  # Client may have disconnected; safe to ignore
+
+
+async def broadcast_users(room_name: str):
+    if room_name not in rooms:
+        return
+    user_list = [u["username"] for u in rooms[room_name]]
+    for user in rooms[room_name]:
+        try:
+            await user["ws"].send_json({
+                "type": "users",
+                "users": user_list,
+            })
+        except Exception:
+            pass  # Client may have disconnected; safe to ignore
