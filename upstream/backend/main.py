@@ -438,3 +438,83 @@ async def ai_websocket_endpoint(
     intro_prompt = (
         f"Start a natural conversation. Greet the user '{username}' with a highly realistic, warm, and brief in-character opening line. "
         "Do NOT sound like an AI. Do NOT mention that this is a chat session, chat room, internet space, or 'corner'. "
+        "Speak exactly like a real person starting a normal text conversation."
+    )
+    
+    welcome_text = await stream_ai_response(
+        websocket=websocket,
+        system_prompt=system_prompt,
+        text_payload=intro_prompt,
+        chat_history=[],
+        persona_id=persona_id,
+        custom_instruction=custom_instruction,
+        time_payload=str(asyncio.get_event_loop().time())
+    )
+
+    chat_history = []
+
+    try:
+        while True:
+            data = await websocket.receive_json()
+            text_payload = data.get("text", "").strip()
+            time_payload = data.get("time", "")
+
+            if not text_payload:
+                continue
+
+            if len(text_payload) > 500:
+                await websocket.send_json({
+                    "type": "message",
+                    "username": "System",
+                    "text": "⚠️ Message too long (max 500 characters).",
+                    "time": time_payload
+                })
+                continue
+
+            # Echo user's message back to them
+            await websocket.send_json({
+                "type": "message",
+                "username": username,
+                "text": text_payload,
+                "time": time_payload
+            })
+
+            # Send typing state message
+            await websocket.send_json({
+                "type": "typing",
+                "username": "AI Chatbot",
+                "status": True
+            })
+
+            # Stream AI response
+            response_text = await stream_ai_response(
+                websocket=websocket,
+                system_prompt=system_prompt,
+                text_payload=text_payload,
+                chat_history=chat_history,
+                persona_id=persona_id,
+                custom_instruction=custom_instruction,
+                time_payload=time_payload
+            )
+
+            # Record turn in chat history
+            chat_history.append({"role": "user", "text": text_payload})
+            chat_history.append({"role": "model", "text": response_text})
+
+    except WebSocketDisconnect:
+        pass
+
+
+@app.get("/")
+def home():
+    return {"message": "Server is working!"}
+
+@app.get("/rooms")
+def get_rooms():
+    return {
+        room: len(users)
+        for room, users in rooms.items()
+    }
+
+@app.websocket("/ws/{room_name}/{username}")
+async def websocket_endpoint(
