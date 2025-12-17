@@ -358,3 +358,83 @@ def generate_mock_ai_response(persona_id: str, custom_instruction: str, user_tex
             return f"🏔️ **Adventure is calling! Regarding your inquiry about \"{user_text}\":** 🎒\n\nThat sounds like an amazing exploration point! When traveling through this concept, keep these local tips in mind:\n1. **Embrace the Unexpected**: The best views come after the hardest climbs.\n2. **Eat Local**: Always try the street food—it's where the culture truly lives.\n\nLet me know if you want me to build a customized 3-day travel itinerary for this! 🗺️"
 
     elif persona_id == "tech_architect":
+        if "hello" in text_lower or "hi" in text_lower:
+            return "⚡ **Ada (Principal Tech Architect)** is online.\n\nConnection established. Ready to design high-performance architecture, review code, or solve scaling bottlenecks. What technical challenge are we tackling today?"
+        elif "code" in text_lower or "javascript" in text_lower or "react" in text_lower or "python" in text_lower:
+            return "### 💻 Optimized Component Design\n\nFor high-performance rendering and state isolation in a real-time context, here is an optimized pattern:\n\n```javascript\n// High-performance React state controller\nimport { useState, useCallback } from 'react';\n\nexport const useSocketStream = (endpoint) => {\n  const [data, setData] = useState([]);\n  \n  const handleIncomingStream = useCallback((event) => {\n    const payload = JSON.parse(event.data);\n    setData((prev) => [...prev, payload]);\n  }, []);\n\n  return {\n    data,\n    handleIncomingStream\n  };\n};\n```\n\n**Architectural Highlights:**\n* **Memory Footprint**: Uses memoized callbacks to prevent superfluous re-renders.\n* **Fault Tolerance**: Wrap socket reconnects in an exponential backoff loop."
+        else:
+            return f"### 🛠️ Technical Assessment: *{user_text}*\n\nAnalyzing implementation strategy:\n\n1. **Architecture & State**: Use decoupled pub/sub streams to separate data ingestion from UI rendering.\n2. **Security**: Enforce strict server-side validation and schema checks on every payload.\n3. **Performance**: Offload heavy computation to background workers.\n\nLet me know your specific tech stack or constraints to generate complete code schemas!"
+
+    else:
+        role_label = (custom_instruction or persona_id).strip()
+        role_lower = role_label.lower()
+        
+        if "teacher" in role_lower or "tutor" in role_lower or "explain" in role_lower:
+            if "hello" in text_lower or "hi" in text_lower:
+                return f"🎓 **Welcome to class!** (Persona: *{role_label}*)\n\nHello! I am ready to guide you today. What topic or concept would you like us to learn step-by-step?"
+            else:
+                return f"📚 **Teacher's Explanation** (Persona: *{role_label}*)\n\nGreat question regarding *\"{user_text}\"*! Let's break this down clearly:\n\n1. **Core Principle**: Understanding the fundamental idea behind this topic.\n2. **Practical Example**: How it applies in real-world scenarios.\n3. **Summary**: The key lesson to take away.\n\nWould you like me to clarify any part or move to the next topic?"
+
+        elif "hacker" in role_lower or "cyber" in role_lower or "terminal" in role_lower:
+            if "hello" in text_lower or "hi" in text_lower:
+                return f"⚡ **[TERMINAL CONNECTED]** (Persona: *{role_label}*)\n\nSystem access granted. Mainframe stream initialized. State your objective."
+            else:
+                return f"💻 **[EXECUTING PAYLOAD]**\n\nProcessing query: *\"{user_text}\"*\n```bash\n# Running diagnostic scan...\nStatus: 200 OK\nPayload delivered successfully.\n```\nReady for next command."
+
+        elif "doctor" in role_lower or "medical" in role_lower or "health" in role_lower:
+            if "hello" in text_lower or "hi" in text_lower:
+                return f"🩺 **Medical Consultant Online** (Persona: *{role_label}*)\n\nHello. I am here to assist with health & medical insights. How can I assist you today?"
+            else:
+                return f"📋 **Clinical Assessment** (Persona: *{role_label}*)\n\nRegarding your inquiry *\"{user_text}\"*, it is important to observe standard health guidelines, clinical evidence, and consult a certified specialist for personal diagnoses."
+
+        else:
+            if "hello" in text_lower or "hi" in text_lower:
+                return f"✨ **Greetings!** (Persona: *{role_label}*)\n\nI am active and roleplaying as **\"{role_label}\"**. What would you like to discuss today?"
+            else:
+                return f"✨ **[Role: {role_label}]**\n\nRegarding *\"{user_text}\"*\n\nAdhering strictly to my custom instructions (*\"{role_label}\"*), here is my response:\n\nI am fully aligned with your instructions! Let me know what specific details you want to explore next."
+
+@app.websocket("/ws/ai/{persona_id}/{username}")
+async def ai_websocket_endpoint(
+    websocket: WebSocket,
+    persona_id: str,
+    username: str,
+    custom_instruction: str = Query(None)
+):
+    username = username.strip()
+    persona_id = persona_id.strip()
+
+    if len(username) == 0 or len(username) > 20:
+        await websocket.close(code=1008)
+        return
+
+    await websocket.accept()
+
+    # Determine system prompt
+    if persona_id == "custom":
+        raw_prompt = custom_instruction.strip() if custom_instruction else DEFAULT_BOT_ROLE
+        system_prompt = (
+            f"You are a real human roleplaying exactly as: '{raw_prompt}'. "
+            "You must converse naturally, emotionally, and authentically exactly like a real person in a chat window. "
+            "DO NOT write like an AI. Avoid structured lists, bullet points, robotic formatting, and formal robotic preambles. "
+            "Keep your sentences warm, natural, and matching a human's texting style. Never break character. "
+            "Never refer to yourself as an AI, ChatGPT, a large language model, or a virtual assistant. "
+            "Adopt the voice, heart, vocabulary, and genuine feelings of this persona completely."
+        )
+    else:
+        persona_info = PERSONAS.get(persona_id)
+        if not persona_info:
+            system_prompt = DEFAULT_BOT_ROLE
+        else:
+            system_prompt = persona_info["prompt"]
+
+    # Send typing state message while model generates the greeting
+    await websocket.send_json({
+        "type": "typing",
+        "username": "AI Chatbot",
+        "status": True
+    })
+
+    # Stream dynamic, persona-specific welcome message
+    intro_prompt = (
+        f"Start a natural conversation. Greet the user '{username}' with a highly realistic, warm, and brief in-character opening line. "
+        "Do NOT sound like an AI. Do NOT mention that this is a chat session, chat room, internet space, or 'corner'. "
