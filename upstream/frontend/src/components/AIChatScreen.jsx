@@ -118,3 +118,43 @@ function CodeBlock({ code, lang }) {
     )
 }
 
+function AIChatScreen({ username, onLeave }) {
+    const [activePersona, setActivePersona] = useState("tech_architect")
+    const [customPrompt, setCustomPrompt] = useState("")
+    const [appliedCustomPrompt, setAppliedCustomPrompt] = useState("")
+    const [isCustomMode, setIsCustomMode] = useState(false)
+    const [messages, setMessages] = useState([])
+    const [input, setInput] = useState("")
+    const [isTyping, setIsTyping] = useState(false)
+    const [sidebarOpen, setSidebarOpen] = useState(false)
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+    const [copiedIndex, setCopiedIndex] = useState(null)
+
+    const ws = useRef(null)
+    const messagesEndRef = useRef(null)
+    const inputRef = useRef(null)
+
+    // Reset chat history when persona changes
+    useEffect(() => {
+        setMessages([])
+    }, [activePersona, isCustomMode, appliedCustomPrompt])
+
+    // Scroll to bottom on new message or typing state change
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }, [messages, isTyping])
+
+    // Handle WebSocket life cycle
+    useEffect(() => {
+        const wsUrl = import.meta.env.VITE_WS_BASE_URL || "ws://localhost:8000"
+        
+        let path = `${wsUrl}/ws/ai/`
+        if (isCustomMode) {
+            path += `custom/${username}?custom_instruction=${encodeURIComponent(appliedCustomPrompt || "A helpful AI assistant")}`
+        } else {
+            path += `${activePersona}/${username}`
+        }
+
+        const socket = new WebSocket(path)
+        ws.current = socket
+
