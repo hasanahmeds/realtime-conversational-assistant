@@ -398,3 +398,83 @@ function AIChatScreen({ username, onLeave }) {
                                                     </span>
                                                 )}
                                             </div>
+                                            <span className="text-[10px] font-semibold text-cyan-400 tracking-wide block mt-0.5">{p.tag}</span>
+                                        </div>
+                                    </div>
+                                    <p className="text-[11px] text-slate-400 mt-2.5 leading-relaxed line-clamp-2">
+                                        {p.desc}
+                                    </p>
+                                </button>
+                            )
+                        })}
+
+                        {/* Custom Instruction Section */}
+                        <div className="pt-4 mt-2 border-t border-slate-800">
+                            <div className="flex items-center justify-between mb-2.5">
+                                <h4 className="text-xs font-bold text-slate-300 uppercase tracking-widest flex items-center gap-1.5">
+                                    <span>⚙️</span> Dynamic Persona
+                                </h4>
+                            </div>
+
+                            {/* Quick Presets */}
+                            {!isCustomMode && (
+                                <div className="mb-3 space-y-1">
+                                    <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mb-1">Quick Templates:</span>
+                                    <div className="grid grid-cols-2 gap-1.5">
+                                        {SYSTEM_PROMPT_PRESETS.map((preset, idx) => (
+                                            <button
+                                                key={idx}
+                                                type="button"
+                                                onClick={() => setCustomPrompt(preset.prompt)}
+                                                className="text-[10px] bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 text-slate-300 hover:text-white p-1.5 rounded-lg text-left truncate transition-colors"
+                                            >
+                                                {preset.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {isCustomMode ? (
+                                <div className="space-y-2">
+                                    <div className="w-full bg-slate-950/80 border border-indigo-500/40 rounded-xl p-3 text-xs text-indigo-300 leading-relaxed font-medium shadow-inner">
+                                        <div className="text-[10px] uppercase font-bold text-indigo-400 mb-1">Active Custom System Prompt:</div>
+                                        "{appliedCustomPrompt}"
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={handleClearCustomPrompt}
+                                        className="w-full bg-slate-800 hover:bg-red-950/80 border border-slate-700 hover:border-red-600/50 text-slate-200 hover:text-red-300 text-xs font-bold py-2 rounded-xl transition-all active:scale-95"
+                                    >
+                                        ❌ Reset to Default Persona
+                                    </button>
+                                </div>
+                            ) : (
+                                <form onSubmit={handleApplyCustomPrompt} className="space-y-2">
+                                    <textarea
+                                        placeholder="e.g. Speak like a senior code reviewer or medieval knight..."
+                                        value={customPrompt}
+                                        onChange={(e) => setCustomPrompt(e.target.value)}
+                                        maxLength={250}
+                                        rows={3}
+                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs focus:outline-none focus:border-cyan-500/60 transition-all placeholder-slate-600 text-slate-100 leading-relaxed resize-none"
+                                    />
+                                    <button
+                                        type="submit"
+                                        disabled={!customPrompt.trim()}
+                                        className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-600 text-white text-xs font-bold py-2.5 rounded-xl shadow-md transition-all active:scale-95"
+                                    >
+                                        ✨ Apply Custom Persona
+                                    </button>
+                                </form>
+                            )}
+                        </div>
+                    </div>
+                </aside>
+
+                {/* Main Chat Conversation Workspace */}
+                <main className="flex-1 flex flex-col bg-[#070a11] overflow-hidden relative select-text">
+                    
+                    {/* Message Stream */}
+                    <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 custom-scrollbar">
+                        
