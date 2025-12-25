@@ -238,3 +238,83 @@ function AIChatScreen({ username, onLeave }) {
         setMessages([])
     }
 
+    // Modern Markdown Renderer
+    function renderMarkdown(text) {
+        if (!text) return null
+        const parts = text.split(/(```[\s\S]*?```)/g)
+        return parts.map((part, i) => {
+            if (part.startsWith("```")) {
+                const match = part.match(/```(\w*)\n([\s\S]*?)```/)
+                const lang = match ? match[1] : ""
+                const code = match ? match[2] : part.slice(3, -3)
+                return <CodeBlock key={i} code={code} lang={lang} />
+            }
+            
+            let rendered = part
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/`([^`]+)`/g, '<code class="bg-slate-950 text-pink-400 px-1.5 py-0.5 rounded-md font-mono text-xs border border-slate-800">$1</code>')
+                .replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold text-white">$1</strong>')
+                .replace(/\*([^*]+)\*/g, '<em class="italic text-slate-200">$1</em>')
+                .replace(/\n/g, '<br/>')
+            
+            return (
+                <span
+                    key={i}
+                    dangerouslySetInnerHTML={{ __html: rendered }}
+                    className="leading-relaxed break-words text-[14px] md:text-[15px] text-slate-200"
+                />
+            )
+        })
+    }
+
+    const currentPersonaObj = PERSONA_LIST.find(p => p.id === activePersona)
+
+    return (
+        <div className="h-screen bg-[#070a11] flex flex-col font-sans text-slate-100 overflow-hidden relative select-none">
+            
+            {/* Ambient Background Gradient Glows */}
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            {/* Header */}
+            <header className="h-16 px-4 md:px-6 bg-slate-900/80 backdrop-blur-xl border-b border-slate-800/80 flex justify-between items-center shrink-0 z-30 shadow-lg">
+                <div className="flex items-center gap-3">
+                    <button
+                        onClick={onLeave}
+                        className="px-3 py-2 bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 hover:border-slate-600 rounded-xl transition-all text-slate-300 hover:text-white flex items-center gap-2 text-xs font-semibold group shadow-sm active:scale-95"
+                        title="Return to Room List"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        <span>Exit Studio</span>
+                    </button>
+
+                    <div className="h-5 w-px bg-slate-800 mx-1 hidden sm:block"></div>
+
+                    {/* Mobile Sidebar Drawer Toggle */}
+                    <button
+                        onClick={() => setSidebarOpen(!sidebarOpen)}
+                        className="md:hidden px-3 py-1.5 bg-slate-800 border border-slate-700 rounded-lg text-xs font-medium text-slate-200 flex items-center gap-1.5"
+                    >
+                        <span>🎭</span> Personas
+                    </button>
+
+                    {/* Active Persona Header Banner */}
+                    <div className="hidden sm:flex items-center gap-3">
+                        <div className={`w-9 h-9 rounded-xl bg-gradient-to-tr ${isCustomMode ? "from-indigo-500 to-purple-600" : currentPersonaObj?.gradient} flex items-center justify-center text-lg shadow-md shadow-cyan-950/40 border border-white/10`}>
+                            {isCustomMode ? "🤖" : currentPersonaObj?.emoji}
+                        </div>
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <h2 className="text-white text-sm font-bold tracking-tight">
+                                    {isCustomMode ? "Custom AI Persona" : currentPersonaObj?.name}
+                                </h2>
+                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                                    {isCustomMode ? "Dynamic Prompt" : currentPersonaObj?.title}
+                                </span>
+                            </div>
+                            <p className="text-[11px] text-slate-400 font-medium truncate max-w-xs">
+                                {isCustomMode ? `"${appliedCustomPrompt}"` : currentPersonaObj?.tag}
