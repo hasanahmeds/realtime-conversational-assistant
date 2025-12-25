@@ -158,3 +158,83 @@ function AIChatScreen({ username, onLeave }) {
         const socket = new WebSocket(path)
         ws.current = socket
 
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data)
+            if (data.type === "typing") {
+                setIsTyping(data.status)
+            } else if (data.type === "stream_start") {
+                setIsTyping(false)
+                setMessages((prev) => [
+                    ...prev,
+                    {
+                        id: data.id,
+                        username: data.username,
+                        text: "",
+                        time: data.time
+                    }
+                ])
+            } else if (data.type === "stream_chunk") {
+                setMessages((prev) =>
+                    prev.map((msg) =>
+                        msg.id === data.id
+                            ? { ...msg, text: msg.text + data.chunk }
+                            : msg
+                    )
+                )
+            } else if (data.type === "stream_end") {
+                setIsTyping(false)
+            } else {
+                setMessages((prev) => [...prev, data])
+            }
+        }
+
+        return () => socket.close()
+    }, [activePersona, username, isCustomMode, appliedCustomPrompt])
+
+    function sendMessage(textToSend) {
+        const query = textToSend || input
+        if (!query.trim()) return
+        if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+            ws.current.send(JSON.stringify({ text: query.trim(), time: new Date().toISOString() }))
+            setInput("")
+            setShowEmojiPicker(false)
+        }
+    }
+
+    function handlePersonaSelect(id) {
+        setIsCustomMode(false)
+        setActivePersona(id)
+        setSidebarOpen(false)
+    }
+
+    function handleApplyCustomPrompt(e) {
+        if (e) e.preventDefault()
+        if (!customPrompt.trim()) return
+        setAppliedCustomPrompt(customPrompt)
+        setIsCustomMode(true)
+        setSidebarOpen(false)
+    }
+
+    function handleClearCustomPrompt() {
+        setIsCustomMode(false)
+        setCustomPrompt("")
+        setAppliedCustomPrompt("")
+        setActivePersona("tech_architect")
+    }
+
+    function handleAddEmoji(emoji) {
+        setInput((prev) => prev + emoji)
+        setShowEmojiPicker(false)
+        inputRef.current?.focus()
+    }
+
+    function handleCopyMessage(text, index) {
+        navigator.clipboard.writeText(text)
+        setCopiedIndex(index)
+        setTimeout(() => setCopiedIndex(null), 2000)
+    }
+
+    function handleClearChat() {
+        setMessages([])
+    }
+
