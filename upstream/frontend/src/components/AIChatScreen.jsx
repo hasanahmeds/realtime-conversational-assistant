@@ -318,3 +318,83 @@ function AIChatScreen({ username, onLeave }) {
                             </div>
                             <p className="text-[11px] text-slate-400 font-medium truncate max-w-xs">
                                 {isCustomMode ? `"${appliedCustomPrompt}"` : currentPersonaObj?.tag}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Status Indicator & Controls */}
+                <div className="flex items-center gap-3">
+                    {messages.length > 0 && (
+                        <button
+                            onClick={handleClearChat}
+                            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/40 hover:bg-slate-800 text-slate-400 hover:text-slate-200 text-xs border border-slate-800 transition-colors"
+                            title="Clear current chat log"
+                        >
+                            <span>🗑️</span> Clear Chat
+                        </button>
+                    )}
+
+                    <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-full shadow-inner">
+                        <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        <span className="text-[11px] font-bold text-slate-300 tracking-wider uppercase">AI Studio Live</span>
+                    </div>
+                </div>
+            </header>
+
+            {/* Workspace Main Area */}
+            <div className="flex flex-1 overflow-hidden relative">
+
+                {/* Left Sidebar - Persona Picker & Custom Prompt */}
+                <aside className={`
+                    absolute md:static top-0 left-0 h-full w-80 bg-slate-900/95 backdrop-blur-2xl border-r border-slate-800/80 z-40 flex flex-col shrink-0 transition-transform duration-300
+                    ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+                `}>
+                    <div className="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950/40">
+                        <div className="flex items-center gap-2">
+                            <span className="text-base">🎭</span>
+                            <h3 className="text-xs font-bold text-slate-300 uppercase tracking-widest">
+                                Studio Personas
+                            </h3>
+                        </div>
+                        <button
+                            onClick={() => setSidebarOpen(false)}
+                            className="md:hidden p-1 text-slate-400 hover:text-white"
+                        >
+                            ✕
+                        </button>
+                    </div>
+
+                    <div className="flex-1 overflow-y-auto p-3.5 space-y-2.5 custom-scrollbar">
+                        {PERSONA_LIST.map((p) => {
+                            const isSelected = !isCustomMode && activePersona === p.id
+                            return (
+                                <button
+                                    key={p.id}
+                                    onClick={() => handlePersonaSelect(p.id)}
+                                    className={`
+                                        w-full text-left p-3.5 rounded-2xl border transition-all duration-200 relative overflow-hidden group active:scale-[0.98]
+                                        ${isSelected 
+                                            ? `bg-slate-800/90 border-slate-600 shadow-lg ${p.borderGlow}` 
+                                            : "bg-slate-900/40 hover:bg-slate-800/60 border-slate-800/70 hover:border-slate-700"}
+                                    `}
+                                >
+                                    {isSelected && (
+                                        <div className={`absolute top-0 left-0 w-1 h-full bg-gradient-to-b ${p.gradient}`}></div>
+                                    )}
+                                    <div className="flex items-start gap-3">
+                                        <div className={`w-10 h-10 rounded-xl bg-gradient-to-tr ${p.gradient} flex items-center justify-center text-xl shrink-0 shadow-md border border-white/10 group-hover:scale-105 transition-transform`}>
+                                            {p.emoji}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center justify-between">
+                                                <h4 className="font-bold text-slate-100 text-sm truncate">{p.name}</h4>
+                                                {isSelected && (
+                                                    <span className="text-[9px] font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-1.5 py-0.5 rounded">
+                                                        ACTIVE
+                                                    </span>
+                                                )}
+                                            </div>
