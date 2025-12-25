@@ -478,3 +478,83 @@ function AIChatScreen({ username, onLeave }) {
                     {/* Message Stream */}
                     <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 custom-scrollbar">
                         
+                        {messages.length === 0 ? (
+                            <div className="h-full flex flex-col items-center justify-center text-center p-6 max-w-2xl mx-auto my-auto">
+                                <div className={`w-20 h-20 rounded-3xl bg-gradient-to-tr ${isCustomMode ? "from-indigo-500 to-purple-600" : currentPersonaObj?.gradient} flex items-center justify-center text-white text-4xl shadow-2xl shadow-cyan-950/50 mb-5 border border-white/20 animate-pulse`}>
+                                    {isCustomMode ? "🤖" : currentPersonaObj?.emoji}
+                                </div>
+                                
+                                <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">
+                                    {isCustomMode ? "Custom AI Persona Ready" : `${currentPersonaObj?.name} (${currentPersonaObj?.title})`}
+                                </h3>
+                                
+                                <p className="text-slate-400 text-sm leading-relaxed max-w-lg mb-8">
+                                    {isCustomMode 
+                                        ? `Custom System Prompt active: "${appliedCustomPrompt}". Ask anything to test your custom AI configuration.` 
+                                        : currentPersonaObj?.desc}
+                                </p>
+
+                                {/* Interactive Prompt Starter Chips */}
+                                {!isCustomMode && currentPersonaObj?.promptStarters && (
+                                    <div className="w-full max-w-xl space-y-2.5">
+                                        <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 block">
+                                            💡 Try asking {currentPersonaObj.name}:
+                                        </span>
+                                        <div className="flex flex-col gap-2">
+                                            {currentPersonaObj.promptStarters.map((starter, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    onClick={() => sendMessage(starter)}
+                                                    className="w-full text-left p-3 rounded-xl bg-slate-900/60 hover:bg-slate-800 border border-slate-800/80 hover:border-slate-700 text-slate-200 hover:text-white text-xs font-medium transition-all shadow-sm flex items-center justify-between group active:scale-[0.99]"
+                                                >
+                                                    <span>{starter}</span>
+                                                    <span className="text-slate-500 group-hover:text-cyan-400 transition-colors">→</span>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            messages.map((msg, index) => {
+                                const isMe = msg.username === username
+                                const isAI = !isMe && msg.username !== "System"
+
+                                return (
+                                    <div key={msg.id || index} className={`flex gap-3 max-w-4xl ${isMe ? "ml-auto flex-row-reverse" : "mr-auto flex-row"}`}>
+                                        
+                                        {/* Avatar Icon */}
+                                        <div className={`w-9 h-9 rounded-xl shrink-0 flex items-center justify-center text-base shadow-md font-bold ${
+                                            isMe 
+                                                ? "bg-gradient-to-tr from-blue-600 to-indigo-600 text-white" 
+                                                : isCustomMode 
+                                                    ? "bg-gradient-to-tr from-indigo-500 to-purple-600 text-white" 
+                                                    : `bg-gradient-to-tr ${currentPersonaObj?.gradient} text-white`
+                                        }`}>
+                                            {isMe ? username.charAt(0).toUpperCase() : (isCustomMode ? "🤖" : currentPersonaObj?.emoji)}
+                                        </div>
+
+                                        {/* Message Container */}
+                                        <div className={`flex flex-col max-w-[85%] sm:max-w-[80%] ${isMe ? "items-end" : "items-start"}`}>
+                                            
+                                            {/* Header Tag & Timestamp */}
+                                            <div className="flex items-center gap-2 mb-1 px-1">
+                                                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                                                    {isMe ? "You" : (isCustomMode ? "Custom AI Persona" : currentPersonaObj?.name)}
+                                                </span>
+                                                <span className="text-[9px] text-slate-500 font-semibold">
+                                                    {msg.time ? new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : ""}
+                                                </span>
+                                            </div>
+
+                                            {/* Chat Bubble */}
+                                            <div className={`
+                                                px-4 py-3 rounded-2xl shadow-xl leading-relaxed text-[14px] md:text-[15px] relative group
+                                                ${isMe
+                                                    ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-tr-xs"
+                                                    : "bg-slate-900/90 text-slate-100 rounded-tl-xs border border-slate-800 shadow-slate-950/50"}
+                                            `}>
+                                                {isMe ? (
+                                                    <p className="break-words whitespace-pre-wrap">{msg.text}</p>
+                                                ) : (
+                                                    <div className="space-y-1">
