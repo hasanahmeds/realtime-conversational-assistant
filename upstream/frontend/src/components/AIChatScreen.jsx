@@ -678,3 +678,9 @@ function AIChatScreen({ username, onLeave }) {
 
                 </main>
 
+            </div>
+        </div>
+    )
+}
+
+export default AIChatScreen
