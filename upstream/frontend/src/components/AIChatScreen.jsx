@@ -558,3 +558,43 @@ function AIChatScreen({ username, onLeave }) {
                                                     <p className="break-words whitespace-pre-wrap">{msg.text}</p>
                                                 ) : (
                                                     <div className="space-y-1">
+                                                        {renderMarkdown(msg.text)}
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* Copy button for AI responses */}
+                                            {isAI && (
+                                                <div className="flex items-center gap-2 mt-1.5 px-1 opacity-75 hover:opacity-100 transition-opacity">
+                                                    <button
+                                                        onClick={() => handleCopyMessage(msg.text, index)}
+                                                        className="text-[10px] text-slate-400 hover:text-slate-200 flex items-center gap-1 bg-slate-900/60 border border-slate-800 px-2 py-0.5 rounded-md transition-colors"
+                                                    >
+                                                        {copiedIndex === index ? (
+                                                            <span className="text-emerald-400">✓ Copied</span>
+                                                        ) : (
+                                                            <span>📋 Copy text</span>
+                                                        )}
+                                                    </button>
+                                                </div>
+                                            )}
+
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        )}
+
+                        {/* Typing Animation Loader */}
+                        {isTyping && (
+                            <div className="flex gap-3 max-w-4xl mr-auto">
+                                <div className={`w-9 h-9 rounded-xl shrink-0 bg-gradient-to-tr ${isCustomMode ? "from-indigo-500 to-purple-600" : currentPersonaObj?.gradient} flex items-center justify-center text-white text-base shadow-md`}>
+                                    {isCustomMode ? "🤖" : currentPersonaObj?.emoji}
+                                </div>
+                                <div className="flex flex-col items-start">
+                                    <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1 px-1">
+                                        {isCustomMode ? "AI Thinking..." : `${currentPersonaObj?.name} is thinking...`}
+                                    </span>
+                                    <div className="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-xs px-4 py-3 shadow-md flex items-center gap-1.5">
+                                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce"></div>
+                                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce [animation-delay:0.2s]"></div>
