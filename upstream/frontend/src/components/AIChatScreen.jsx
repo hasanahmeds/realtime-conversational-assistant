@@ -598,3 +598,83 @@ function AIChatScreen({ username, onLeave }) {
                                     <div className="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-xs px-4 py-3 shadow-md flex items-center gap-1.5">
                                         <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce"></div>
                                         <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+                                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        <div ref={messagesEndRef} />
+                    </div>
+
+                    {/* Elevated SaaS Input Dock */}
+                    <div className="p-4 bg-slate-900/80 backdrop-blur-xl border-t border-slate-800/80 shrink-0 relative z-20">
+                        
+                        {/* Emoji Picker Popup */}
+                        {showEmojiPicker && (
+                            <div className="absolute bottom-20 left-4 z-50 bg-slate-900 border border-slate-800 p-3 rounded-2xl shadow-2xl w-72 backdrop-blur-2xl">
+                                <div className="flex justify-between items-center pb-2 mb-2 border-b border-slate-800">
+                                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Select Emoji</span>
+                                    <button onClick={() => setShowEmojiPicker(false)} className="text-slate-400 hover:text-white text-xs">✕</button>
+                                </div>
+                                <div className="grid grid-cols-6 gap-1.5 max-h-48 overflow-y-auto custom-scrollbar">
+                                    {POPULAR_EMOJIS.map((emoji) => (
+                                        <button
+                                            key={emoji}
+                                            type="button"
+                                            onClick={() => handleAddEmoji(emoji)}
+                                            className="text-xl hover:scale-125 transition-transform p-1 rounded hover:bg-slate-800 active:scale-95"
+                                        >
+                                            {emoji}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Input Container */}
+                        <div className="max-w-4xl mx-auto flex items-center gap-2.5 relative">
+                            
+                            {/* Emoji Toggle Button */}
+                            <button
+                                type="button"
+                                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                                className="h-12 w-12 shrink-0 bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 rounded-2xl flex items-center justify-center text-xl transition-colors shadow-sm active:scale-95"
+                                title="Add emoji"
+                            >
+                                😊
+                            </button>
+
+                            {/* Main Input Textfield */}
+                            <div className="flex-1 relative rounded-2xl overflow-hidden p-[1px] bg-slate-800 focus-within:bg-gradient-to-r focus-within:from-cyan-500 focus-within:to-blue-600 transition-all duration-300">
+                                <input
+                                    ref={inputRef}
+                                    type="text"
+                                    value={input}
+                                    onChange={(e) => setInput(e.target.value)}
+                                    onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                                    placeholder={
+                                        isCustomMode 
+                                            ? "Send message to Custom AI Persona..." 
+                                            : `Ask ${currentPersonaObj?.name} anything...`
+                                    }
+                                    maxLength={500}
+                                    className="w-full bg-slate-950 text-slate-100 placeholder-slate-500 px-4 py-3 rounded-[15px] focus:outline-none text-sm border-0 transition-all"
+                                />
+                            </div>
+
+                            {/* Send Button */}
+                            <button
+                                onClick={() => sendMessage()}
+                                disabled={!input.trim()}
+                                className="h-12 w-12 shrink-0 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-600 text-white rounded-2xl flex items-center justify-center transition-all shadow-md active:scale-95 group"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-0.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                </main>
+
