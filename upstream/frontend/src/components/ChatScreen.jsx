@@ -118,3 +118,83 @@ function ChatScreen({ username, room, onLeaveRoom }) {
                                             </span>
                                         </div>
                                     ) : (
+                                        <div className={`flex flex-col max-w-[85%] sm:max-w-[70%] ${isMe ? "self-end items-end" : "self-start items-start"}`}>
+                                            {/* Username Label (Only for others) */}
+                                            {!isMe && (
+                                                <span className="text-xs font-semibold text-gray-400 mb-1 ml-1.5 capitalize">
+                                                    {msg.username}
+                                                </span>
+                                            )}
+
+                                            {/* Chat Bubble */}
+                                            <div className={`relative px-4 py-2.5 shadow-sm text-[15px]
+                                                ${isMe
+                                                    ? "bg-blue-600 text-white rounded-2xl rounded-tr-sm"
+                                                    : "bg-gray-800 text-gray-100 rounded-2xl rounded-tl-sm border border-gray-700"}`}
+                                            >
+                                                <p className="leading-relaxed break-words">{msg.text}</p>
+                                            </div>
+
+                                            {/* Timestamp — parsed from UTC into viewer's local time */}
+                                            <span className={`text-[10px] text-gray-500 mt-1 font-medium ${isMe ? "mr-1.5" : "ml-1.5"}`}>
+                                                {msg.time
+                                                    ? new Date(msg.time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+                                                    : ""}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+                            )
+                        })}
+                        <div ref={messagesEndRef} />
+                    </div>
+
+                    {/* Input Area (Sticky Bottom) */}
+                    <div className="p-3 bg-gray-800 border-t border-gray-700 shrink-0 relative">
+                        {showEmojiPicker && (
+                            <div className="absolute bottom-20 left-4 z-50 bg-gray-900 border border-gray-700 p-3 rounded-2xl shadow-2xl w-64 backdrop-blur-md bg-opacity-95">
+                                <div 
+                                    className="grid grid-cols-6 gap-2 max-h-48 overflow-y-auto pr-1"
+                                    style={{
+                                        scrollbarWidth: "thin",
+                                        scrollbarColor: "#374151 transparent"
+                                    }}
+                                >
+                                    {POPULAR_EMOJIS.map((emoji) => (
+                                        <button
+                                            key={emoji}
+                                            type="button"
+                                            onClick={() => handleAddEmoji(emoji)}
+                                            className="text-2xl hover:scale-125 transition-transform p-1.5 focus:outline-none active:scale-90"
+                                        >
+                                            {emoji}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                        <div className="flex gap-2 max-w-5xl mx-auto items-center relative">
+                            <button
+                                type="button"
+                                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                                className="h-12 w-12 shrink-0 bg-gray-700 hover:bg-gray-650 text-gray-300 hover:text-white rounded-full flex items-center justify-center text-xl transition-all active:scale-95"
+                                title="Add Emoji"
+                            >
+                                😊
+                            </button>
+                            
+                            <input
+                                type="text"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                                placeholder={`Send Message in #${room}...`}
+                                maxLength={500}
+                                className="flex-1 bg-gray-700 text-white placeholder-gray-400 px-5 py-3.5 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow text-[15px] border border-transparent focus:border-blue-600"
+                            />
+
+                            <button
+                                onClick={sendMessage}
+                                disabled={input.trim() === ""}
+                                className="h-12 w-12 shrink-0 bg-blue-600 hover:bg-blue-500 disabled:bg-gray-700 disabled:text-gray-500 text-white rounded-full flex items-center justify-center transition-all shadow-md active:scale-95"
+                            >
