@@ -198,3 +198,41 @@ function ChatScreen({ username, room, onLeaveRoom }) {
                                 disabled={input.trim() === ""}
                                 className="h-12 w-12 shrink-0 bg-blue-600 hover:bg-blue-500 disabled:bg-gray-700 disabled:text-gray-500 text-white rounded-full flex items-center justify-center transition-all shadow-md active:scale-95"
                             >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Sidebar - Online Users (Desktop Only - Optional but makes it look pro) */}
+                <div className="hidden md:flex flex-col w-64 bg-gray-800 border-l border-gray-700 shrink-0 shadow-[-4px_0_15px_rgba(0,0,0,0.1)]">
+                    <div className="p-5 border-b border-gray-700">
+                        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                            Participants ({onlineUsers.length})
+                        </h3>
+                    </div>
+                    <div className="flex-1 overflow-y-auto p-3 space-y-1.5">
+                        {onlineUsers.map((user, i) => (
+                            <div key={i} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-750 transition-colors cursor-default group">
+                                <div className="relative">
+                                    <div className="w-9 h-9 bg-gray-700 rounded-full flex items-center justify-center text-gray-300 font-semibold text-sm group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                        {user.charAt(0).toUpperCase()}
+                                    </div>
+                                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-gray-800"></div>
+                                </div>
+                                <span className={`text-[15px] font-medium truncate ${user === username ? "text-blue-400" : "text-gray-300"}`}>
+                                    {user === username ? `${user} (You)` : user}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    )
+}
+
+export default ChatScreen
